@@ -13,7 +13,21 @@ class PackageCell: UICollectionViewCell {
         didSet {
             nameLabel.text = package?.name
             trackingLabel.text = package?.trackingNumber
-            statusLabel.text = package?.status
+            
+            switch package?.status {
+            case "PRE_TRANSIT":
+                statusLabel.text = "Pre transit"
+            case "TRANSIT":
+                statusLabel.text = "In transit"
+            case "DELIVERED":
+                statusLabel.text = "Delivered"
+            case "RETURNED":
+                statusLabel.text = "Returned"
+            case "FAILURE":
+                statusLabel.text = "Failure"
+            default:
+                statusLabel.text = "Unknown"
+            }
         }
     }
     
