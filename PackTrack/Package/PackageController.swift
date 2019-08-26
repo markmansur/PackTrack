@@ -47,7 +47,7 @@ class PackageController: UIViewController {
     
     let whiteCard: UIView = {
         let view = UIView(frame: CGRect())
-        view.backgroundColor = .customWhite
+        view.backgroundColor = .white
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleBack(tapGestureRecognizer:))))
         view.layer.cornerRadius = 8
