@@ -36,7 +36,7 @@ class PackagesViewModel {
                     fatalError("error updating package \(error)")
                 }
                 guard let trackingResponseJSON = trackingResponseJSON else { return }
-                CoreDataManager.shared.updatePackage(package: package, withJSON: trackingResponseJSON)
+                CoreDataManager.shared.updatePackage(package: package, trackingJson: trackingResponseJSON)
                 dispatchGroup.leave()
             }
         }
@@ -53,7 +53,7 @@ class PackagesViewModel {
                 fatalError("error updating package \(error)")
             }
             guard let trackingResponseJSON = trackingResponseJSON else { return }
-            CoreDataManager.shared.updatePackage(package: package, withJSON: trackingResponseJSON)
+            CoreDataManager.shared.updatePackage(package: package, trackingJson: trackingResponseJSON)
             DispatchQueue.main.async {
                 self.delegate?.didUpdatePackages()
             }

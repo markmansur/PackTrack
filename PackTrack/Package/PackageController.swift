@@ -22,7 +22,7 @@ class PackageController: UIViewController {
     
     let packageNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ class PackageController: UIViewController {
     let trackingNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "Tracking number"
-        label.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.8)
+        label.textColor = .customLightGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,7 +39,7 @@ class PackageController: UIViewController {
     let trackingNumLabel: UILabel = {
         let label = UILabel()
         label.textColor = .customWhite
-        label.font = UIFont.boldSystemFont(ofSize: 32)
+        label.font = UIFont.boldSystemFont(ofSize: 40)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -47,7 +47,7 @@ class PackageController: UIViewController {
     
     let whiteCard: UIView = {
         let view = UIView(frame: CGRect())
-        view.backgroundColor = .customWhite
+        view.backgroundColor = .white
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleBack(tapGestureRecognizer:))))
         view.layer.cornerRadius = 8
@@ -77,6 +77,7 @@ class PackageController: UIViewController {
         setupPackageNameLabel()
         setupTrackingNumberLabel()
         setupWhiteCard()
+        setupTrackingHistoryController()
         view.backgroundColor = .darkBlue
     }
     
@@ -116,5 +117,20 @@ class PackageController: UIViewController {
     
     @objc func handleBack(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func setupTrackingHistoryController() {
+        let childVC = TrackingHistoryController(package: self.package)
+
+        self.addChild(childVC)
+
+        self.view.addSubview(childVC.view)
+        childVC.didMove(toParent: self)
+
+        childVC.view.translatesAutoresizingMaskIntoConstraints = false
+        childVC.view.topAnchor.constraint(equalTo: whiteCard.centerYAnchor).isActive = true
+        childVC.view.leftAnchor.constraint(equalTo: whiteCard.leftAnchor).isActive = true
+        childVC.view.widthAnchor.constraint(equalTo: whiteCard.widthAnchor).isActive = true
+        childVC.view.bottomAnchor.constraint(equalTo: whiteCard.bottomAnchor).isActive = true
     }
 }

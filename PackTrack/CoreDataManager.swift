@@ -49,17 +49,39 @@ struct CoreDataManager {
         
     }
     
-    func addPackage(name: String, trackingNumber: String) -> Package {
+    func addPackage(name: String, trackingNumber: String, trackingJson: trackingResponseJSON? = nil) -> Package {
         let context = persistentContainer.viewContext
-        let package = NSEntityDescription.insertNewObject(forEntityName: "Package", into: context) as! Package
-        package.setValuesForKeys(["name": name, "trackingNumber": trackingNumber])
+        
+        let package = Package(context: context)
+        package.name = name
+        package.trackingNumber = trackingNumber
+        package.status = trackingJson?.trackingStatus?.status
+        
+        trackingJson?.trackingHistory?.forEach({ (trackingStatusJSON) in
+            let context = persistentContainer.viewContext
+            
+            let trackingStatus = TrackingStatus(context: context)
+            trackingStatus.status = trackingStatusJSON.status
+            trackingStatus.statusDetails = trackingStatusJSON.statusDetails
+            package.addToTrackingHistory(trackingStatus)
+        })
         
         saveContext()
         return package
     }
     
-    func updatePackage(package: Package, withJSON trackingJson: trackingResponseJSON) {
+    func updatePackage(package: Package, trackingJson: trackingResponseJSON) {
         package.status = trackingJson.trackingStatus?.status
+        package.trackingHistory = nil // remove any current tracking history.
+        
+        trackingJson.trackingHistory?.forEach({ (trackingStatusJSON) in
+            let context = persistentContainer.viewContext
+            
+            let trackingStatus = TrackingStatus(context: context)
+            trackingStatus.status = trackingStatusJSON.status
+            trackingStatus.statusDetails = trackingStatusJSON.statusDetails
+            package.addToTrackingHistory(trackingStatus)
+        })
         saveContext()
     }
     
