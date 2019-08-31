@@ -11,7 +11,7 @@ import Foundation
 struct trackingResponseJSON: Decodable {
     let eta: String?
     let trackingStatus: trackingStatusJSON?
-    let trackingHistry: [trackingStatusJSON]?
+    let trackingHistory: [trackingStatusJSON]?
 }
 
 struct trackingStatusJSON: Decodable {
