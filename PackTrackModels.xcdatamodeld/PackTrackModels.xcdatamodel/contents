@@ -4,8 +4,23 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="trackingNumber" attributeType="String" defaultValueString=""/>
+        <relationship name="trackingHistory" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TrackingStatus" inverseName="package" inverseEntity="TrackingStatus"/>
+    </entity>
+    <entity name="TrackingStatus" representedClassName="TrackingStatus" syncable="YES" codeGenerationType="class">
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="statusDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="statusDetails" optional="YES" attributeType="String"/>
+        <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="trackingHistory" inverseEntity="Package"/>
+    </entity>
+    <entity name="TrackingStatusLocation" representedClassName="TrackingStatusLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <attribute name="zip" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Package" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Package" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="TrackingStatus" positionX="-63" positionY="9" width="128" height="103"/>
+        <element name="TrackingStatusLocation" positionX="-54" positionY="54" width="128" height="103"/>
     </elements>
 </model>
