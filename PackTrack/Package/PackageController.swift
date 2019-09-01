@@ -101,6 +101,14 @@ class PackageController: UIViewController {
         return label
     }()
     
+    private let mapView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .mapBlue
+        view.layer.cornerRadius = 5
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
@@ -108,9 +116,18 @@ class PackageController: UIViewController {
         setupPackageNameLabel()
         setupTrackingNumberLabel()
         setupWhiteCard()
+        setupMapView()
         setupTrackingHistoryController()
         setupStatusViews()
         view.backgroundColor = .darkBlue
+    }
+    
+    private func setupMapView() {
+        view.addSubview(mapView)
+        mapView.centerYAnchor.constraint(equalTo: whiteCard.topAnchor).isActive = true
+        mapView.centerXAnchor.constraint(equalTo: whiteCard.centerXAnchor).isActive = true
+        mapView.widthAnchor.constraint(equalTo: whiteCard.widthAnchor, multiplier: 0.95).isActive = true
+        mapView.heightAnchor.constraint(equalToConstant: 250).isActive = true
     }
     
     private func setupBackImageView() {
@@ -143,7 +160,7 @@ class PackageController: UIViewController {
         view.addSubview(whiteCard)
         whiteCard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         whiteCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.93).isActive = true
-        whiteCard.heightAnchor.constraint(equalToConstant: 550).isActive = true
+        whiteCard.heightAnchor.constraint(equalToConstant: 540).isActive = true
         whiteCard.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
     }
     
@@ -158,8 +175,8 @@ class PackageController: UIViewController {
         labelsStackView.axis = .vertical
         
         view.addSubview(labelsStackView)
-        labelsStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -68).isActive = true
-        labelsStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 8).isActive = true
+        labelsStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -75).isActive = true
+        labelsStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 14).isActive = true
         
         //TODO: setup 'daysLeftView'
     }
@@ -174,8 +191,8 @@ class PackageController: UIViewController {
 
         childVC.view.translatesAutoresizingMaskIntoConstraints = false
         childVC.view.topAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -20).isActive = true
-        childVC.view.leftAnchor.constraint(equalTo: whiteCard.leftAnchor).isActive = true
-        childVC.view.widthAnchor.constraint(equalTo: whiteCard.widthAnchor).isActive = true
+        childVC.view.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 6).isActive = true
+        childVC.view.rightAnchor.constraint(equalTo: whiteCard.rightAnchor, constant: -14).isActive = true
         childVC.view.bottomAnchor.constraint(equalTo: whiteCard.bottomAnchor).isActive = true
     }
 }
