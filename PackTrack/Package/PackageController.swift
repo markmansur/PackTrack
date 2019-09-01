@@ -17,6 +17,21 @@ class PackageController: UIViewController {
         didSet {
             packageNameLabel.text = package?.name
             trackingNumLabel.text = package?.trackingNumber
+            
+            switch package?.status {
+            case "PRE_TRANSIT":
+                packageStatusLabel.text = "Pre transit"
+            case "TRANSIT":
+                packageStatusLabel.text = "In transit"
+            case "DELIVERED":
+                packageStatusLabel.text = "Delivered"
+            case "RETURNED":
+                packageStatusLabel.text = "Returned"
+            case "FAILURE":
+                packageStatusLabel.text = "Failure"
+            default:
+                packageStatusLabel.text = "Unknown"
+            }
         }
     }
     
@@ -70,6 +85,22 @@ class PackageController: UIViewController {
         }
     }()
     
+    private let statusLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightBlue
+        label.text = "Status"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let packageStatusLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 36)
+        label.textColor = .darkBlue
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
@@ -78,6 +109,7 @@ class PackageController: UIViewController {
         setupTrackingNumberLabel()
         setupWhiteCard()
         setupTrackingHistoryController()
+        setupStatusViews()
         view.backgroundColor = .darkBlue
     }
     
@@ -111,12 +143,25 @@ class PackageController: UIViewController {
         view.addSubview(whiteCard)
         whiteCard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         whiteCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.93).isActive = true
-        whiteCard.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        whiteCard.heightAnchor.constraint(equalToConstant: 550).isActive = true
         whiteCard.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
     }
     
     @objc func handleBack(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    private func setupStatusViews() {
+        // status labels
+        let labelsStackView = UIStackView(arrangedSubviews: [statusLabel, packageStatusLabel])
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+        labelsStackView.axis = .vertical
+        
+        view.addSubview(labelsStackView)
+        labelsStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -68).isActive = true
+        labelsStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 8).isActive = true
+        
+        //TODO: setup 'daysLeftView'
     }
     
     private func setupTrackingHistoryController() {
@@ -128,7 +173,7 @@ class PackageController: UIViewController {
         childVC.didMove(toParent: self)
 
         childVC.view.translatesAutoresizingMaskIntoConstraints = false
-        childVC.view.topAnchor.constraint(equalTo: whiteCard.centerYAnchor).isActive = true
+        childVC.view.topAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -20).isActive = true
         childVC.view.leftAnchor.constraint(equalTo: whiteCard.leftAnchor).isActive = true
         childVC.view.widthAnchor.constraint(equalTo: whiteCard.widthAnchor).isActive = true
         childVC.view.bottomAnchor.constraint(equalTo: whiteCard.bottomAnchor).isActive = true
