@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class PackageCell: UICollectionViewCell {
     var package: Package? {
@@ -60,10 +61,33 @@ class PackageCell: UICollectionViewCell {
     }()
     
     private let mapView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mapBlue
-        view.layer.cornerRadius = 5
+        
+        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+        let view = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        let padding = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        view.padding = padding
+        
+//        view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        do {
+          // Set the map style by passing the URL of the local file.
+          if let styleURL = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
+            view.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+          } else {
+            NSLog("Unable to find style.json")
+          }
+        } catch {
+          NSLog("One or more of the map styles failed to load. \(error)")
+        }
+
+        
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        marker.map = view
+
         return view
     }()
     
