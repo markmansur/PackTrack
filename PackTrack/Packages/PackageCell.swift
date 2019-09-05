@@ -67,7 +67,7 @@ class PackageCell: UICollectionViewCell {
         let padding = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         view.padding = padding
         
-//        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = false
         view.translatesAutoresizingMaskIntoConstraints = false
         
         do {

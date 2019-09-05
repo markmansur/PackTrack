@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class PackageController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -17,6 +18,7 @@ class PackageController: UIViewController {
         didSet {
             packageNameLabel.text = package?.name
             trackingNumLabel.text = package?.trackingNumber
+            daysLeftView.daysLeft = 4
             
             switch package?.status {
             case "PRE_TRANSIT":
@@ -102,12 +104,35 @@ class PackageController: UIViewController {
     }()
     
     private let mapView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .mapBlue
-        view.layer.cornerRadius = 5
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+            
+            let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
+            let view = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+            view.layer.cornerRadius = 8
+        
+            view.isUserInteractionEnabled = false
+            view.translatesAutoresizingMaskIntoConstraints = false
+            
+            do {
+              // Set the map style by passing the URL of the local file.
+              if let styleURL = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
+                view.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+              } else {
+                NSLog("Unable to find style.json")
+              }
+            } catch {
+              NSLog("One or more of the map styles failed to load. \(error)")
+            }
+            
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+            marker.title = "Sydney"
+            marker.snippet = "Australia"
+            marker.map = view
+
+            return view
+        }()
+    
+    private let daysLeftView = DaysLeftView(daysLeft: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +152,7 @@ class PackageController: UIViewController {
         mapView.centerYAnchor.constraint(equalTo: whiteCard.topAnchor).isActive = true
         mapView.centerXAnchor.constraint(equalTo: whiteCard.centerXAnchor).isActive = true
         mapView.widthAnchor.constraint(equalTo: whiteCard.widthAnchor, multiplier: 0.95).isActive = true
-        mapView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        mapView.heightAnchor.constraint(equalToConstant: 230).isActive = true
     }
     
     private func setupBackImageView() {
@@ -171,14 +196,17 @@ class PackageController: UIViewController {
     private func setupStatusViews() {
         // status labels
         let labelsStackView = UIStackView(arrangedSubviews: [statusLabel, packageStatusLabel])
-        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.axis = .vertical
         
-        view.addSubview(labelsStackView)
-        labelsStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -75).isActive = true
-        labelsStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 14).isActive = true
+        // horizontal stack view holding labels stack view and daysLeftView
+        let horizontalStackView = UIStackView(arrangedSubviews: [labelsStackView, daysLeftView])
+        horizontalStackView.alignment = .bottom
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        //TODO: setup 'daysLeftView'
+        view.addSubview(horizontalStackView)
+        horizontalStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -75).isActive = true
+        horizontalStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 14).isActive = true
+        horizontalStackView.rightAnchor.constraint(equalTo: whiteCard.rightAnchor, constant: -14).isActive = true
     }
     
     private func setupTrackingHistoryController() {
