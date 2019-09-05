@@ -9,20 +9,45 @@
 import UIKit
 
 class DaysLeftView: UIView {
-    let label: UILabel = {
+    var daysLeft: Int {
+        didSet {
+            label.text = "\(daysLeft) days left"
+        }
+    }
+    
+    private let label: UILabel = {
         let label = UILabel()
-        label.text = "6 days left"
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     init(daysLeft: Int) {
+        self.daysLeft = daysLeft
         super.init(frame: CGRect.null)
-        backgroundColor = .darkBlue
         
+        setupView()
+        setupSubviews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .darkBlue
+        
+        layer.cornerRadius = 45 / 2
+        
+        heightAnchor.constraint(equalToConstant: 45).isActive = true
+        widthAnchor.constraint(equalToConstant: 130).isActive = true
+    }
+    
+    private func setupSubviews() {
+        addSubview(label)
+        label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 }
