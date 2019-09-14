@@ -18,8 +18,6 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
     let blueBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .darkBlue
-//        view.layer.cornerRadius = 100
-//        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -57,15 +55,6 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    let addPackageButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Add", for: .normal)
-        button.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .red
-        return button
-    }()
         
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -76,7 +65,6 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         viewModel = PackagesViewModel()
         viewModel?.delegate = self 
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -89,6 +77,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         setupBlueBackgroundView()
         setupCountLabels()
         setupCollectionView()
+        setupAddButton()
     }
     
     private func setupBlueBackgroundView() {
@@ -97,16 +86,6 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         blueBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         blueBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         blueBackgroundView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: 100).isActive = true
-        
-//        let path = UIBezierPath(roundedRect:blueBackgroundView.bounds,
-//                                byRoundingCorners:[.topRight, .bottomLeft],
-//                                cornerRadii: CGSize(width: 20, height:  20))
-//
-//        let maskLayer = CAShapeLayer()
-//
-//        maskLayer.path = path.cgPath
-//        blueBackgroundView.layer.mask = maskLayer
-        
     }
     
     private func setupCountLabels() {
@@ -124,8 +103,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         
         let horizontalStackView = UIStackView(arrangedSubviews: [
             activePackagesStackView,
-            deliveredPackagesStackView,
-            addPackageButton
+            deliveredPackagesStackView
         ])
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         horizontalStackView.spacing = 35
@@ -149,18 +127,21 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
     }
     
     @objc private func handleAdd() {
-        print("adding")
-        
-        // TODO: Ask the view model to add a package rather than directly dealing with core data in the ViewController
-//        CoreDataManager.shared.addPackage(name: "Chair", trackingNumber: "12345678910111213")
         viewModel?.addPackage(name: "Chair", trackingNumber: "123456789")
         collectionView.reloadData()
+    }
+    
+    private func setupAddButton() {
+        let addPackageButton = AddPackageButton()
+        addPackageButton.addTarget(self, action: #selector(handleAdd), for: .touchUpInside)
+        
+        view.addSubview(addPackageButton)
+        addPackageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addPackageButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12).isActive = true
     }
     
     func didUpdatePackages() {
         collectionView.reloadData()
     }
-    
-    
 }
 
