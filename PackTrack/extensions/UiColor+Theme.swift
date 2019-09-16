@@ -17,4 +17,5 @@ extension UIColor {
     static let mapBlue = UIColor(red: 29/255, green: 52/255, blue: 104/255, alpha: 1)
     static let dateTimeColor = UIColor(red: 146/255, green: 146/255, blue: 146/255, alpha: 0.99)
     static let lineSeparator = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 0.90)
+    static let transparentBorder = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1)
 }
