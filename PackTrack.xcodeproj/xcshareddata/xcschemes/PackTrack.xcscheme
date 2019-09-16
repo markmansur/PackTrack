@@ -50,6 +50,13 @@
             ReferencedContainer = "container:PackTrack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "GOOGLE_API_KEY"
+            value = "&lt;API_KEY_HERE&gt;"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
