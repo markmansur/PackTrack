@@ -12,28 +12,31 @@ class TrackingHistoryCell: UITableViewCell {
     var trackingStatus: TrackingStatus? {
         didSet {
             statusLabel.text = trackingStatus?.statusDetails
+            if let date = trackingStatus?.statusDate {
+                print(date)
+                dateLabel.text = formatDate(date, withFormatter: "dd MMM yyyy")
+                timeLabel.text = formatDate(date, withFormatter: "hh':'mm")
+            }
         }
     }
     
-    let dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
-        label.text = "04 Sept 2019"
         label.textColor = .dateTimeColor
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let timeLabel: UILabel = {
+    private let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "04:09"
         label.textColor = .dateTimeColor
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.text = "Departed from local distribution centre"
@@ -42,7 +45,7 @@ class TrackingHistoryCell: UITableViewCell {
         return label
     }()
     
-    let lineSeparatorView: UIView = {
+    private let lineSeparatorView: UIView = {
         let view = UIView()
         let lineView = UIView()
         lineView.backgroundColor = .lineSeparator
@@ -85,5 +88,11 @@ class TrackingHistoryCell: UITableViewCell {
         statusLabel.leftAnchor.constraint(equalTo: dateTimeStackView.rightAnchor, constant: 8).isActive = true
         statusLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         
+    }
+    
+    private func formatDate(_ date: Date, withFormatter format: String) -> String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
     }
 }

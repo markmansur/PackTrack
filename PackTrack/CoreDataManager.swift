@@ -63,6 +63,9 @@ struct CoreDataManager {
             let trackingStatus = TrackingStatus(context: context)
             trackingStatus.status = trackingStatusJSON.status
             trackingStatus.statusDetails = trackingStatusJSON.statusDetails
+            if let dateString = trackingStatusJSON.statusDate {
+                trackingStatus.statusDate = getDate(date: dateString)
+            }
             package.addToTrackingHistory(trackingStatus)
         })
         
@@ -80,6 +83,9 @@ struct CoreDataManager {
             let trackingStatus = TrackingStatus(context: context)
             trackingStatus.status = trackingStatusJSON.status
             trackingStatus.statusDetails = trackingStatusJSON.statusDetails
+            if let dateString = trackingStatusJSON.statusDate {
+                trackingStatus.statusDate = getDate(date: dateString)
+            }
             package.addToTrackingHistory(trackingStatus)
         })
         saveContext()
@@ -92,5 +98,14 @@ struct CoreDataManager {
         } catch let saveErr {
             fatalError("Failed to save package: \(saveErr)")
         }
+    }
+    
+    private func getDate(date: String) -> Date? {
+        // remove the milliseconds portion from the string, otherwise formatter fails...
+        var newDateString = date.components(separatedBy: ".")[0]
+        newDateString.append("Z")
+        
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from: newDateString)
     }
 }
