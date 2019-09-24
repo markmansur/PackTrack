@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PackagesController: UICollectionViewController, PackagesViewModelDelegate {
+class PackagesController: UICollectionViewController, PackagesViewModelDelegate, AddPackageModalDelegate {
     var viewModel: PackagesViewModel?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -127,8 +127,11 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
     }
     
     @objc private func handleAdd() {
-        viewModel?.addPackage(name: "Chair", trackingNumber: "123456789")
-        collectionView.reloadData()
+        let vc = AddPackageModalViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        
+        present(vc, animated: false, completion: nil)
     }
     
     private func setupAddButton() {
@@ -138,6 +141,11 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate 
         view.addSubview(addPackageButton)
         addPackageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         addPackageButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12).isActive = true
+    }
+    
+    func didAddPackage(name: String, trackingNumber: String) {
+        viewModel?.addPackage(name: name, trackingNumber: trackingNumber)
+        collectionView.reloadData()
     }
     
     func didUpdatePackages() {
