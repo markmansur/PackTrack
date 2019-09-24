@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let navController = UINavigationController(rootViewController: PackagesController())
+            navController.interactivePopGestureRecognizer?.delegate = nil
             navController.isNavigationBarHidden = true
             window.rootViewController = navController
             self.window = window

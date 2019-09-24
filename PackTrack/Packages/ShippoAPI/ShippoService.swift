@@ -26,7 +26,6 @@ struct ShippoService {
             }
             
             guard let data = data else { return }
-            print(String(data: data, encoding: .ascii) ?? "")
             
             let jsonDecoder = JSONDecoder()
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
