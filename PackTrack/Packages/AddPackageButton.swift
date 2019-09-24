@@ -22,9 +22,11 @@ class AddPackageButton: UIButton {
             return UIImageView()
         }
     }()
+
     
     init() {
         super.init(frame: CGRect.null)
+
         
         setupView()
         setupShadow()
