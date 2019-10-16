@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6805D81B233AA8F500B48458 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6805D81A233AA8F500B48458 /* Coordinate.swift */; };
 		680A1F66232182F200A66340 /* AddPackageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A1F65232182F200A66340 /* AddPackageButton.swift */; };
 		680A1F6B23301D3B00A66340 /* EnvironmentVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A1F6A23301D3B00A66340 /* EnvironmentVariables.swift */; };
 		680A1F6D23312BE800A66340 /* AddPackageModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A1F6C23312BE800A66340 /* AddPackageModalVC.swift */; };
@@ -31,15 +32,18 @@
 		686C867E2304FD2F00B23059 /* PackageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686C867D2304FD2F00B23059 /* PackageController.swift */; };
 		686C86812304FE7300B23059 /* UiColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686C86802304FE7300B23059 /* UiColor+Theme.swift */; };
 		686C868623064FF400B23059 /* UIView+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686C868523064FF400B23059 /* UIView+helpers.swift */; };
+		68CB6B9A23412A1800257ED1 /* GMapsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CB6B9923412A1700257ED1 /* GMapsController.swift */; };
 		68F54EB82332B93A0052DA58 /* UIButton+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F54EB72332B93A0052DA58 /* UIButton+helpers.swift */; };
 		68F54EBA23340AF80052DA58 /* UILabel+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F54EB923340AF80052DA58 /* UILabel+helpers.swift */; };
 		68F69940233A5695008CB7AF /* UIStackView+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F6993F233A5695008CB7AF /* UIStackView+helpers.swift */; };
+		68F69942233A7B21008CB7AF /* GeocodingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F69941233A7B21008CB7AF /* GeocodingService.swift */; };
 		68F753E62308433C008575AF /* PackTrackModels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 68F753E42308433C008575AF /* PackTrackModels.xcdatamodeld */; };
 		7E78B71D599DF88C24429F58 /* libPods-PackTrack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F45768AC3A43A21BD7457446 /* libPods-PackTrack.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05654B2B270C0C3B4CFE8E1B /* Pods-PackTrack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackTrack.release.xcconfig"; path = "Target Support Files/Pods-PackTrack/Pods-PackTrack.release.xcconfig"; sourceTree = "<group>"; };
+		6805D81A233AA8F500B48458 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		680A1F65232182F200A66340 /* AddPackageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPackageButton.swift; sourceTree = "<group>"; };
 		680A1F6A23301D3B00A66340 /* EnvironmentVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentVariables.swift; sourceTree = "<group>"; };
 		680A1F6C23312BE800A66340 /* AddPackageModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPackageModalVC.swift; sourceTree = "<group>"; };
@@ -66,9 +70,11 @@
 		686C867D2304FD2F00B23059 /* PackageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageController.swift; sourceTree = "<group>"; };
 		686C86802304FE7300B23059 /* UiColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiColor+Theme.swift"; sourceTree = "<group>"; };
 		686C868523064FF400B23059 /* UIView+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+helpers.swift"; sourceTree = "<group>"; };
+		68CB6B9923412A1700257ED1 /* GMapsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMapsController.swift; sourceTree = "<group>"; };
 		68F54EB72332B93A0052DA58 /* UIButton+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+helpers.swift"; sourceTree = "<group>"; };
 		68F54EB923340AF80052DA58 /* UILabel+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+helpers.swift"; sourceTree = "<group>"; };
 		68F6993F233A5695008CB7AF /* UIStackView+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+helpers.swift"; sourceTree = "<group>"; };
+		68F69941233A7B21008CB7AF /* GeocodingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingService.swift; sourceTree = "<group>"; };
 		68F753E52308433C008575AF /* PackTrackModels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PackTrackModels.xcdatamodel; sourceTree = "<group>"; };
 		6990F8442428F1D4B05DA5D7 /* Pods-PackTrack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackTrack.debug.xcconfig"; path = "Target Support Files/Pods-PackTrack/Pods-PackTrack.debug.xcconfig"; sourceTree = "<group>"; };
 		F45768AC3A43A21BD7457446 /* libPods-PackTrack.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PackTrack.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +166,7 @@
 		686C865E22FFC7C200B23059 /* PackTrack */ = {
 			isa = PBXGroup;
 			children = (
+				68CB6B9B2341923300257ED1 /* GoogleCloud */,
 				680A1F672327F71E00A66340 /* environment */,
 				68F753E42308433C008575AF /* PackTrackModels.xcdatamodeld */,
 				686C867F2304FE6300B23059 /* extensions */,
@@ -210,6 +217,24 @@
 				68F6993F233A5695008CB7AF /* UIStackView+helpers.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		68CB6B9B2341923300257ED1 /* GoogleCloud */ = {
+			isa = PBXGroup;
+			children = (
+				68CB6B9923412A1700257ED1 /* GMapsController.swift */,
+				68F69943233A7B48008CB7AF /* GeocodingAPI */,
+			);
+			path = GoogleCloud;
+			sourceTree = "<group>";
+		};
+		68F69943233A7B48008CB7AF /* GeocodingAPI */ = {
+			isa = PBXGroup;
+			children = (
+				68F69941233A7B21008CB7AF /* GeocodingService.swift */,
+				6805D81A233AA8F500B48458 /* Coordinate.swift */,
+			);
+			path = GeocodingAPI;
 			sourceTree = "<group>";
 		};
 		84528AF1FFD4FCFCD9A71192 /* Pods */ = {
@@ -356,11 +381,14 @@
 				686C866422FFC7C200B23059 /* PackagesController.swift in Sources */,
 				686C866022FFC7C200B23059 /* AppDelegate.swift in Sources */,
 				68F753E62308433C008575AF /* PackTrackModels.xcdatamodeld in Sources */,
+				68CB6B9A23412A1800257ED1 /* GMapsController.swift in Sources */,
 				68F69940233A5695008CB7AF /* UIStackView+helpers.swift in Sources */,
 				68F54EB82332B93A0052DA58 /* UIButton+helpers.swift in Sources */,
+				6805D81B233AA8F500B48458 /* Coordinate.swift in Sources */,
 				68116835231370700061377A /* TrackingHistoryViewModel.swift in Sources */,
 				686C868623064FF400B23059 /* UIView+helpers.swift in Sources */,
 				68F54EBA23340AF80052DA58 /* UILabel+helpers.swift in Sources */,
+				68F69942233A7B21008CB7AF /* GeocodingService.swift in Sources */,
 				6811683923138E820061377A /* TrackingHistoryController+TableView.swift in Sources */,
 				680A1F66232182F200A66340 /* AddPackageButton.swift in Sources */,
 				6811683B231C14340061377A /* DaysLeftView.swift in Sources */,
