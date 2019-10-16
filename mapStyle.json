@@ -34,26 +34,10 @@
   },
   {
     "featureType": "administrative.land_parcel",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
     "elementType": "labels.text.fill",
     "stylers": [
       {
         "color": "#64779e"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.neighborhood",
-    "stylers": [
-      {
-        "visibility": "off"
       }
     ]
   },
@@ -139,15 +123,6 @@
   },
   {
     "featureType": "poi.park",
-    "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
     "elementType": "labels.text.fill",
     "stylers": [
       {
@@ -166,7 +141,7 @@
   },
   {
     "featureType": "road",
-    "elementType": "labels",
+    "elementType": "labels.icon",
     "stylers": [
       {
         "visibility": "off"
@@ -255,6 +230,14 @@
   },
   {
     "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
     "elementType": "labels.text.fill",
     "stylers": [
       {
@@ -295,15 +278,6 @@
     "stylers": [
       {
         "color": "#0e1626"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
       }
     ]
   },
