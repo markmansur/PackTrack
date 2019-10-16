@@ -11,7 +11,6 @@ import UIKit
 class TrackingHistoryController: UITableViewController {
     let viewModel: TrackingHistoryViewModel?
     
-    
     init(package: Package?) {
         viewModel = TrackingHistoryViewModel(trackingHistory: package?.trackingHistory?.array as! [TrackingStatus])
         super.init(nibName: nil, bundle: nil)
@@ -21,16 +20,12 @@ class TrackingHistoryController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         setupTableView()
         tableView.register(TrackingHistoryCell.self, forCellReuseIdentifier: "cellId")
     }
-    
-    
     
     private func setupTableView() {
         tableView.separatorStyle = .none
