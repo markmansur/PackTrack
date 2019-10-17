@@ -15,6 +15,7 @@ class GMapsController: UIViewController {
     init(geolocations: [Geolocation]?) {
         self.geolocations = geolocations
         super.init(nibName: nil, bundle: nil)
+        updateMarkers()
     }
     
     required init?(coder: NSCoder) {
@@ -61,9 +62,6 @@ class GMapsController: UIViewController {
             let latitude = geolocation.latitude
             let longitude = geolocation.longitude
             
-            print(latitude)
-            print(longitude)
-            
             var alreadyExists = false
             
             // check if marker has already been plotted
@@ -92,7 +90,7 @@ class GMapsController: UIViewController {
             let update = GMSCameraUpdate.fit(bounds, withPadding: 40)
             (view as? GMSMapView)?.animate(with: update)
         } else {
-            let cameraPosition = GMSCameraPosition(latitude: markers[0].position.latitude, longitude: markers[0].position.longitude, zoom: 9)
+            let cameraPosition = GMSCameraPosition(latitude: markers[0].position.latitude, longitude: markers[0].position.longitude, zoom: 8)
             (view as? GMSMapView)?.animate(to: cameraPosition)
         }
         
