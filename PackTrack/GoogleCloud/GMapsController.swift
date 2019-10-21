@@ -31,6 +31,7 @@ class GMapsController: UIViewController {
         let camera = GMSCameraPosition.camera(withLatitude: 39.111633, longitude: -94.637469, zoom: 5)
         let mapView = GMSMapView.map(withFrame: .zero, camera: camera)
         
+        mapView.isUserInteractionEnabled = false
         
         do {
           // Set the map style by passing the URL of the local file.
@@ -53,10 +54,15 @@ class GMapsController: UIViewController {
     }
     
     private func updateMarkers() {
+        let markerImage = UIImage(named: "marker")
+        let finalMarkerImage = UIImage(named: "marker-final")
+        
         (view as? GMSMapView)?.clear()
         
         var bounds = GMSCoordinateBounds()
         var markers = [GMSMarker]()
+        
+        let path = GMSMutablePath()
         
         geolocations?.forEach({ (geolocation) in
             let latitude = geolocation.latitude
@@ -78,7 +84,19 @@ class GMapsController: UIViewController {
             if !(alreadyExists == true) {
                 let marker = GMSMarker()
                 
-                marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                if (geolocation.isEqual(geolocations?.last)) {
+                    marker.icon = finalMarkerImage
+                } else {
+                    marker.icon = markerImage
+                }
+                
+                marker.isFlat = true
+                marker.groundAnchor = CGPoint(x: 0.5, y: 0.5) // makes the centre of the image the 'tip' of the image that touches the earth
+                
+                let markerLocation = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                path.add(markerLocation)
+                
+                marker.position = markerLocation
                 marker.map = view as? GMSMapView
                 bounds = bounds.includingCoordinate(marker.position)
                 
@@ -86,8 +104,20 @@ class GMapsController: UIViewController {
             }
         })
         
+        let polyline = GMSPolyline(path: path)
+        polyline.strokeColor = .customGreen
+        polyline.strokeWidth = 2
+        
+        let styles = [GMSStrokeStyle.solidColor(.clear),
+                      GMSStrokeStyle.solidColor(UIColor.customGreen.withAlphaComponent(0.75))]
+        let lengths: [NSNumber] = [20000, 20000]
+        polyline.spans = GMSStyleSpans(polyline.path!, styles, lengths, .rhumb)
+
+        
+        polyline.map = (view as? GMSMapView)
+        
         if markers.count != 1 {
-            let update = GMSCameraUpdate.fit(bounds, withPadding: 40)
+            let update = GMSCameraUpdate.fit(bounds, withPadding: 22)
             (view as? GMSMapView)?.animate(with: update)
         } else {
             let cameraPosition = GMSCameraPosition(latitude: markers[0].position.latitude, longitude: markers[0].position.longitude, zoom: 8)
