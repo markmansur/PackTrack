@@ -61,7 +61,6 @@ class PackageController: UIViewController {
         return label
     }()
     
-    
     let whiteCard: UIView = {
         let view = UIView(frame: CGRect())
         view.backgroundColor = .white
@@ -103,35 +102,6 @@ class PackageController: UIViewController {
         return label
     }()
     
-    private let mapView: UIView = {
-            
-            let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-            let view = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-            view.layer.cornerRadius = 8
-        
-            view.isUserInteractionEnabled = false
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            do {
-              // Set the map style by passing the URL of the local file.
-              if let styleURL = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
-                view.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-              } else {
-                NSLog("Unable to find style.json")
-              }
-            } catch {
-              NSLog("One or more of the map styles failed to load. \(error)")
-            }
-            
-            let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-            marker.title = "Sydney"
-            marker.snippet = "Australia"
-            marker.map = view
-
-            return view
-        }()
-    
     private let daysLeftView = DaysLeftView(daysLeft: 0)
     
     override func viewDidLoad() {
@@ -141,18 +111,32 @@ class PackageController: UIViewController {
         setupPackageNameLabel()
         setupTrackingNumberLabel()
         setupWhiteCard()
-        setupMapView()
+        setupMapVC()
         setupTrackingHistoryController()
         setupStatusViews()
         view.backgroundColor = .darkBlue
     }
     
-    private func setupMapView() {
-        view.addSubview(mapView)
-        mapView.centerYAnchor.constraint(equalTo: whiteCard.topAnchor).isActive = true
-        mapView.centerXAnchor.constraint(equalTo: whiteCard.centerXAnchor).isActive = true
-        mapView.widthAnchor.constraint(equalTo: whiteCard.widthAnchor, multiplier: 0.95).isActive = true
-        mapView.heightAnchor.constraint(equalToConstant: 230).isActive = true
+    private func setupMapVC() {
+        var geolocations = [Geolocation]()
+        let trackingHistory = package?.trackingHistory?.array as? [TrackingStatus]
+        trackingHistory?.forEach({ (trackingStatus) in
+            if let geolocation = trackingStatus.location?.geolocation {
+                geolocations.append(geolocation)
+            }
+        })
+        
+        let mapVC = GMapsController(geolocations: geolocations)
+        self.addChild(mapVC)
+        
+        self.view.addSubview(mapVC.view)
+        mapVC.didMove(toParent: self)
+        mapVC.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        mapVC.view.centerYAnchor.constraint(equalTo: whiteCard.topAnchor).isActive = true
+        mapVC.view.centerXAnchor.constraint(equalTo: whiteCard.centerXAnchor).isActive = true
+        mapVC.view.widthAnchor.constraint(equalTo: whiteCard.widthAnchor, multiplier: 0.95).isActive = true
+        mapVC.view.heightAnchor.constraint(equalToConstant: 230).isActive = true
     }
     
     private func setupBackImageView() {

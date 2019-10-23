@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14886.2" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Geolocation" representedClassName="Geolocation" syncable="YES" codeGenerationType="class">
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackingStatusLocation" inverseName="geolocation" inverseEntity="TrackingStatusLocation"/>
+    </entity>
     <entity name="Package" representedClassName="Package" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
@@ -10,6 +15,7 @@
         <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="statusDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="statusDetails" optional="YES" attributeType="String"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackingStatusLocation" inverseName="trackingStatus" inverseEntity="TrackingStatusLocation"/>
         <relationship name="package" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Package" inverseName="trackingHistory" inverseEntity="Package"/>
     </entity>
     <entity name="TrackingStatusLocation" representedClassName="TrackingStatusLocation" syncable="YES" codeGenerationType="class">
@@ -17,10 +23,13 @@
         <attribute name="country" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="String"/>
         <attribute name="zip" optional="YES" attributeType="String"/>
+        <relationship name="geolocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Geolocation" inverseName="relationship" inverseEntity="Geolocation"/>
+        <relationship name="trackingStatus" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackingStatus" inverseName="location" inverseEntity="TrackingStatus"/>
     </entity>
     <elements>
         <element name="Package" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="TrackingStatus" positionX="-63" positionY="9" width="128" height="103"/>
-        <element name="TrackingStatusLocation" positionX="-54" positionY="54" width="128" height="103"/>
+        <element name="TrackingStatus" positionX="201.5859375" positionY="97.59765625" width="128" height="118"/>
+        <element name="TrackingStatusLocation" positionX="-193.703125" positionY="226.30078125" width="128" height="133"/>
+        <element name="Geolocation" positionX="302.43359375" positionY="277" width="128" height="88"/>
     </elements>
 </model>

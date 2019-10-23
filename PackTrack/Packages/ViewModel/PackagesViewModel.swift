@@ -37,6 +37,23 @@ class PackagesViewModel {
                 }
                 guard let trackingResponseJSON = trackingResponseJSON else { return }
                 CoreDataManager.shared.updatePackage(package: package, trackingJson: trackingResponseJSON)
+                
+                (package.trackingHistory?.array as! [TrackingStatus]).forEach { (trackingStatus) in
+                    let location = trackingStatus.location
+                    guard let city = location?.city else { return }
+                    guard let state = location?.state else { return }
+                    guard let country = location?.country else { return }
+                    
+                    GeocodingService.shared.getGeocode(city: city, state: state, country: country) { (coordinate, error) in
+                        if let err = error {
+                            print(err)
+                        }
+                        
+                        guard let coordinate = coordinate else { return }
+                        CoreDataManager.shared.updateGeolocation(for: trackingStatus, latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    }
+                }
+                
                 dispatchGroup.leave()
             }
         }

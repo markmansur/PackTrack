@@ -66,6 +66,12 @@ struct CoreDataManager {
             if let dateString = trackingStatusJSON.statusDate {
                 trackingStatus.statusDate = getDate(date: dateString)
             }
+            let trackingStatusLocation = TrackingStatusLocation(context: context)
+            trackingStatusLocation.city = trackingStatusJSON.location.city
+            trackingStatusLocation.state = trackingStatusJSON.location.state
+            trackingStatusLocation.country = trackingStatusJSON.location.country
+            
+            trackingStatus.location = trackingStatusLocation
             package.addToTrackingHistory(trackingStatus)
         })
         
@@ -86,8 +92,25 @@ struct CoreDataManager {
             if let dateString = trackingStatusJSON.statusDate {
                 trackingStatus.statusDate = getDate(date: dateString)
             }
+            let trackingStatusLocation = TrackingStatusLocation(context: context)
+            trackingStatusLocation.city = trackingStatusJSON.location.city
+            trackingStatusLocation.state = trackingStatusJSON.location.state
+            trackingStatusLocation.country = trackingStatusJSON.location.country
+            
+            trackingStatus.location = trackingStatusLocation
             package.addToTrackingHistory(trackingStatus)
         })
+        saveContext()
+    }
+    
+    func updateGeolocation(for trackingStatus: TrackingStatus, latitude: Double, longitude: Double) {
+        let geoLocation = Geolocation(context: persistentContainer.viewContext)
+        geoLocation.latitude = latitude
+        geoLocation.longitude = longitude
+        
+        let location = trackingStatus.location
+        location?.geolocation = geoLocation
+        
         saveContext()
     }
     
