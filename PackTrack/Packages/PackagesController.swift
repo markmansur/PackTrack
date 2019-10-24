@@ -59,6 +59,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
     init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
+        viewModel = PackagesViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +79,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
         setupCountLabels()
         setupCollectionView()
         setupAddButton()
+        configureRefreshControl()
     }
     
     private func setupBlueBackgroundView() {
@@ -150,6 +152,19 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
     
     func didUpdatePackages() {
         collectionView.reloadData()
+        collectionView.refreshControl?.endRefreshing()
+    }
+    
+    private func configureRefreshControl() {
+        let refreshControl       = UIRefreshControl()
+        refreshControl.tintColor = .white
+        
+        collectionView.refreshControl = refreshControl
+        collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc private func handleRefreshControl() {
+        viewModel?.updatePackages()
     }
 }
 
