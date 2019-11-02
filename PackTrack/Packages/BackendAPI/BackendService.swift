@@ -8,15 +8,14 @@
 
 import Foundation
 
-struct ShippoService {
-    static let shared = ShippoService()
-        
-    func getTrackingInfo(for trackingNumber: String, completion: @escaping (trackingResponseJSON?, Error?) -> Void) {
-//        let urlString = "https://api.goshippo.com/tracks/usps/\(trackingNumber)"
-        let urlString = "http://localhost:5000"
+struct BackendService {
+    static let shared = BackendService()
+    
+    // TODO: pass in and use carrier here
+    func getTrackingInfo(for trackingNumber: String, completion: @escaping (trackingResponse?, Error?) -> Void) {
+        let urlString = "http://localhost:5000/\("ups")/\(trackingNumber)"
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
-//        request.addValue("ShippoToken shippo_live_238bf56280928d9d3d7dfc6e65f7230d0367fefe", forHTTPHeaderField: "Authorization")
         
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -28,10 +27,8 @@ struct ShippoService {
             guard let data = data else { return }
             
             let jsonDecoder = JSONDecoder()
-            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            
             do {
-                let trackingInfo = try jsonDecoder.decode(trackingResponseJSON.self, from: data)
+                let trackingInfo = try jsonDecoder.decode(trackingResponse.self, from: data)
                 completion(trackingInfo, nil)
                 
             } catch let decodeErr {
