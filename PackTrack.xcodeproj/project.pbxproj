@@ -13,8 +13,8 @@
 		680A1F6D23312BE800A66340 /* AddPackageModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680A1F6C23312BE800A66340 /* AddPackageModalVC.swift */; };
 		681168272308614D0061377A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681168262308614D0061377A /* CoreDataManager.swift */; };
 		6811682923089F580061377A /* PackagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811682823089F580061377A /* PackagesViewModel.swift */; };
-		6811682D2308D1490061377A /* ShippoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811682C2308D1490061377A /* ShippoService.swift */; };
-		6811682F2308D1800061377A /* ShippoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811682E2308D1800061377A /* ShippoModels.swift */; };
+		6811682D2308D1490061377A /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811682C2308D1490061377A /* BackendService.swift */; };
+		6811682F2308D1800061377A /* JSONModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6811682E2308D1800061377A /* JSONModels.swift */; };
 		681168322313701E0061377A /* TrackingHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681168312313701E0061377A /* TrackingHistoryController.swift */; };
 		68116835231370700061377A /* TrackingHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68116834231370700061377A /* TrackingHistoryViewModel.swift */; };
 		68116837231386410061377A /* TrackingHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68116836231386410061377A /* TrackingHistoryCell.swift */; };
@@ -49,8 +49,8 @@
 		680A1F6C23312BE800A66340 /* AddPackageModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPackageModalVC.swift; sourceTree = "<group>"; };
 		681168262308614D0061377A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		6811682823089F580061377A /* PackagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesViewModel.swift; sourceTree = "<group>"; };
-		6811682C2308D1490061377A /* ShippoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippoService.swift; sourceTree = "<group>"; };
-		6811682E2308D1800061377A /* ShippoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShippoModels.swift; sourceTree = "<group>"; };
+		6811682C2308D1490061377A /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
+		6811682E2308D1800061377A /* JSONModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONModels.swift; sourceTree = "<group>"; };
 		681168312313701E0061377A /* TrackingHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingHistoryController.swift; sourceTree = "<group>"; };
 		68116834231370700061377A /* TrackingHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingHistoryViewModel.swift; sourceTree = "<group>"; };
 		68116836231386410061377A /* TrackingHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingHistoryCell.swift; sourceTree = "<group>"; };
@@ -116,13 +116,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		6811682B2308D1310061377A /* ShippoAPI */ = {
+		6811682B2308D1310061377A /* BackendAPI */ = {
 			isa = PBXGroup;
 			children = (
-				6811682C2308D1490061377A /* ShippoService.swift */,
-				6811682E2308D1800061377A /* ShippoModels.swift */,
+				6811682C2308D1490061377A /* BackendService.swift */,
+				6811682E2308D1800061377A /* JSONModels.swift */,
 			);
-			path = ShippoAPI;
+			path = BackendAPI;
 			sourceTree = "<group>";
 		};
 		68116830231370080061377A /* TrackingHistory */ = {
@@ -186,7 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				680A1F6E23312C7000A66340 /* AddPackageModal */,
-				6811682B2308D1310061377A /* ShippoAPI */,
+				6811682B2308D1310061377A /* BackendAPI */,
 				6811682A2308CEC80061377A /* ViewModel */,
 				686C866322FFC7C200B23059 /* PackagesController.swift */,
 				686C86762302598300B23059 /* PackageCell.swift */,
@@ -371,7 +371,7 @@
 			files = (
 				686C86772302598300B23059 /* PackageCell.swift in Sources */,
 				681168322313701E0061377A /* TrackingHistoryController.swift in Sources */,
-				6811682D2308D1490061377A /* ShippoService.swift in Sources */,
+				6811682D2308D1490061377A /* BackendService.swift in Sources */,
 				6811682923089F580061377A /* PackagesViewModel.swift in Sources */,
 				68116837231386410061377A /* TrackingHistoryCell.swift in Sources */,
 				680A1F6D23312BE800A66340 /* AddPackageModalVC.swift in Sources */,
@@ -394,7 +394,7 @@
 				6811683B231C14340061377A /* DaysLeftView.swift in Sources */,
 				686C86742301068E00B23059 /* SceneDelegate.swift in Sources */,
 				686C867B2304EF8E00B23059 /* PackagesController+CollectionView.swift in Sources */,
-				6811682F2308D1800061377A /* ShippoModels.swift in Sources */,
+				6811682F2308D1800061377A /* JSONModels.swift in Sources */,
 				681168272308614D0061377A /* CoreDataManager.swift in Sources */,
 				680A1F6B23301D3B00A66340 /* EnvironmentVariables.swift in Sources */,
 			);
