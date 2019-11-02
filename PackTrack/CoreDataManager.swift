@@ -49,53 +49,54 @@ struct CoreDataManager {
         
     }
     
-    func addPackage(name: String, trackingNumber: String, trackingJson: trackingResponseJSON? = nil) -> Package {
+    func addPackage(name: String, trackingNumber: String, trackingJson: trackingResponse? = nil) -> Package {
         let context = persistentContainer.viewContext
         
         let package = Package(context: context)
         package.name = name
         package.trackingNumber = trackingNumber
-        package.status = trackingJson?.trackingStatus?.status
+        package.status = trackingJson?.checkpoints?[0].tag
         
-        trackingJson?.trackingHistory?.forEach({ (trackingStatusJSON) in
+        trackingJson?.checkpoints?.forEach({ (checkpoint) in
             let context = persistentContainer.viewContext
             
             let trackingStatus = TrackingStatus(context: context)
-            trackingStatus.status = trackingStatusJSON.status
-            trackingStatus.statusDetails = trackingStatusJSON.statusDetails
-            if let dateString = trackingStatusJSON.statusDate {
+            trackingStatus.status = checkpoint.tag
+            trackingStatus.statusDetails = checkpoint.message
+            if let dateString = checkpoint.time {
                 trackingStatus.statusDate = getDate(date: dateString)
             }
             let trackingStatusLocation = TrackingStatusLocation(context: context)
-            trackingStatusLocation.city = trackingStatusJSON.location.city
-            trackingStatusLocation.state = trackingStatusJSON.location.state
-            trackingStatusLocation.country = trackingStatusJSON.location.country
+            trackingStatusLocation.city = checkpoint.city
+            trackingStatusLocation.state = checkpoint.state
+            trackingStatusLocation.country = checkpoint.country
             
             trackingStatus.location = trackingStatusLocation
             package.addToTrackingHistory(trackingStatus)
         })
+        saveContext()
         
         saveContext()
         return package
     }
     
-    func updatePackage(package: Package, trackingJson: trackingResponseJSON) {
-        package.status = trackingJson.trackingStatus?.status
+    func updatePackage(package: Package, trackingJson: trackingResponse) {
+        package.status = trackingJson.checkpoints?[0].tag
         package.trackingHistory = nil // remove any current tracking history.
         
-        trackingJson.trackingHistory?.forEach({ (trackingStatusJSON) in
+        trackingJson.checkpoints?.forEach({ (checkpoint) in
             let context = persistentContainer.viewContext
             
             let trackingStatus = TrackingStatus(context: context)
-            trackingStatus.status = trackingStatusJSON.status
-            trackingStatus.statusDetails = trackingStatusJSON.statusDetails
-            if let dateString = trackingStatusJSON.statusDate {
+            trackingStatus.status = checkpoint.tag
+            trackingStatus.statusDetails = checkpoint.message
+            if let dateString = checkpoint.time {
                 trackingStatus.statusDate = getDate(date: dateString)
             }
             let trackingStatusLocation = TrackingStatusLocation(context: context)
-            trackingStatusLocation.city = trackingStatusJSON.location.city
-            trackingStatusLocation.state = trackingStatusJSON.location.state
-            trackingStatusLocation.country = trackingStatusJSON.location.country
+            trackingStatusLocation.city = checkpoint.city
+            trackingStatusLocation.state = checkpoint.state
+            trackingStatusLocation.country = checkpoint.country
             
             trackingStatus.location = trackingStatusLocation
             package.addToTrackingHistory(trackingStatus)

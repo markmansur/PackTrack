@@ -16,22 +16,28 @@ class PackagesViewModel {
     
     var delegate: PackagesViewModelDelegate?
     
-    let activeParcels = 0
+    let activeParcels    = 0
     let deliveredParcels = 0
     
     init() {
 //        CoreDataManager.shared.deleteAllPackages()
-        updatePackages()
+        getCoreDataPackages()
     }
     
-    private func updatePackages() {
+    private func getCoreDataPackages() {
+        packages = CoreDataManager.shared.fetchPackages()
+        delegate?.didUpdatePackages()
+    }
+    
+    func updatePackages() {
         packages = CoreDataManager.shared.fetchPackages()
         let dispatchGroup = DispatchGroup()
         
         packages.forEach { (package) in
             dispatchGroup.enter()
             guard let trackingNumber = package.trackingNumber else { return }
-            ShippoService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
+            
+            BackendService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
                 if let error = error {
                     fatalError("error updating package \(error)")
                 }
@@ -65,16 +71,18 @@ class PackagesViewModel {
     
     private func updatePackage(package: Package) {
         guard let trackingNumber = package.trackingNumber else { return }
-        ShippoService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
+        BackendService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
             if let error = error {
                 fatalError("error updating package \(error)")
             }
             guard let trackingResponseJSON = trackingResponseJSON else { return }
             CoreDataManager.shared.updatePackage(package: package, trackingJson: trackingResponseJSON)
+            
+            // TODO: update geolocation as well
+            
             DispatchQueue.main.async {
                 self.delegate?.didUpdatePackages()
             }
-            
         }
     }
     
