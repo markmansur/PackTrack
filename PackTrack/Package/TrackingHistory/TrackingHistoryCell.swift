@@ -16,6 +16,11 @@ class TrackingHistoryCell: UITableViewCell {
                 print(date)
                 dateLabel.text = formatDate(date, withFormatter: "dd MMM yyyy")
                 timeLabel.text = formatDate(date, withFormatter: "hh':'mm")
+                
+                let location = trackingStatus?.location
+                if let city = location?.city, let state = location?.state {
+                    locationLabel.text = "\(city), \(state)"
+                }
             }
         }
     }
@@ -38,9 +43,15 @@ class TrackingHistoryCell: UITableViewCell {
     
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2
         label.text = "Departed from local distribution centre"
         label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -87,6 +98,11 @@ class TrackingHistoryCell: UITableViewCell {
         statusLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
         statusLabel.leftAnchor.constraint(equalTo: dateTimeStackView.rightAnchor, constant: 8).isActive = true
         statusLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        addSubview(locationLabel)
+        locationLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 6).isActive = true
+        locationLabel.leftAnchor.constraint(equalTo: dateTimeStackView.rightAnchor, constant: 8).isActive = true
+        locationLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         
     }
     
