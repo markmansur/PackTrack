@@ -25,6 +25,13 @@ class TrackingHistoryCell: UITableViewCell {
         }
     }
     
+    var showLineSeparatorView: Bool = true {
+        didSet {
+            removeSubviews()
+            setupSubviews()
+        }
+    }
+    
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .dateTimeColor
@@ -73,6 +80,7 @@ class TrackingHistoryCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        isUserInteractionEnabled = false
         setupSubviews()
     }
     
@@ -81,7 +89,12 @@ class TrackingHistoryCell: UITableViewCell {
     }
     
     private func setupSubviews() {
-        let dateTimeStackView = UIStackView(arrangedSubviews: [dateLabel, timeLabel, lineSeparatorView])
+        let dateTimeStackView = UIStackView(arrangedSubviews: [dateLabel, timeLabel])
+        
+        if showLineSeparatorView {
+            dateTimeStackView.addArrangedSubview(lineSeparatorView)
+        }
+        
         dateTimeStackView.axis = .vertical
         dateTimeStackView.distribution = .fillEqually
         dateTimeStackView.spacing = 8

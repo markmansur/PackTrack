@@ -15,4 +15,10 @@ extension UIView {
         mask.path = path.cgPath
         layer.mask = mask
     }
+    
+    func removeSubviews() {
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+    }
 }

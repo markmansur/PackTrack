@@ -12,6 +12,12 @@ extension TrackingHistoryController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = (tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? TrackingHistoryCell) else { return UITableViewCell() }
         cell.trackingStatus = viewModel?.trackingHistory[indexPath.row]
+        
+        if indexPath.row == (viewModel?.trackingHistory.count ?? 0) - 1 { // remove separator view
+            cell.showLineSeparatorView = false
+        } else {
+            cell.showLineSeparatorView = true // reset to true when incase cell is being reused
+        }
         return cell
     }
     
