@@ -14,23 +14,15 @@ protocol AddPackageModalDelegate {
 
 class AddPackageModalViewController: UIViewController {
     var delegate: AddPackageModalDelegate?
+    let carriers = Carrier.allCases
     
-    let nameLabel = UILabel(text: "Name", font: UIFont.boldSystemFont(ofSize: 17))
-    let trackingNumberLabel = UILabel(text: "Number", font: UIFont.boldSystemFont(ofSize: 17))
-    
-    let nameTextField: UITextField = {
-        let textField  = UITextField()
-        textField.placeholder = "Optional"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    let trackingNumberTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Required"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
+    private let nameLabel = UILabel(text: "Name", font: UIFont.boldSystemFont(ofSize: 17))
+    private let trackingNumberLabel = UILabel(text: "Number", font: UIFont.boldSystemFont(ofSize: 17))
+    private let carrierLabel = UILabel(text: "Carrier", font: UIFont.boldSystemFont(ofSize: 17))
+
+    private let nameTextField = UITextField(placeholder: "Optional")
+    private let trackingNumberTextField = UITextField(placeholder: "Required")
+    private let carrierTextField = UITextField(placeholder: "Select Carrier")
     
     let modalBackground: UIView = {
         let view = UIView()
@@ -66,11 +58,14 @@ class AddPackageModalViewController: UIViewController {
         return view
     }()
     
+    private let carrierPickerView = CarrierPickerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
         setupHeader()
         setupInputFields()
+        setupCarrierPicker()
     }
     
     private func setupBackground() {
@@ -80,7 +75,7 @@ class AddPackageModalViewController: UIViewController {
         modalBackground.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         modalBackground.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         modalBackground.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.90).isActive = true
-        modalBackground.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        modalBackground.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     private func setupHeader() {
@@ -106,23 +101,27 @@ class AddPackageModalViewController: UIViewController {
     }
     
     private func setupInputFields() {
+        
         let numberStackView = UIStackView(arrangedSubviews: [trackingNumberLabel, trackingNumberTextField])
         let nameStackView = UIStackView(arrangedSubviews: [nameLabel, nameTextField])
+        let carrierStackView = UIStackView(arrangedSubviews: [carrierLabel, carrierTextField])
         
-        let mainStackView = UIStackView(arrangedSubviews: [numberStackView, nameStackView])
+        let mainStackView = UIStackView(arrangedSubviews: [numberStackView, nameStackView, carrierStackView])
+        mainStackView.distribution = .equalSpacing
         mainStackView.axis = .vertical
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.addSeparators(color: .lineSeparator)
         
-        numberStackView.spacing = 20
-        nameStackView.spacing   = 37
-        mainStackView.spacing   = 9
+        numberStackView.spacing  = 20
+        nameStackView.spacing    = 37
+        carrierStackView.spacing = 28
+        mainStackView.spacing    = 12
         
         modalBackground.addSubview(mainStackView)
-        mainStackView.topAnchor.constraint(equalTo: blueHeaderView.bottomAnchor, constant: 8).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: blueHeaderView.bottomAnchor, constant: 10).isActive = true
         mainStackView.centerXAnchor.constraint(equalTo: modalBackground.centerXAnchor).isActive = true
         mainStackView.widthAnchor.constraint(equalTo: modalBackground.widthAnchor, multiplier: 0.95).isActive = true
-        mainStackView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        mainStackView.heightAnchor.constraint(equalToConstant: 125).isActive = true
     }
     
     @objc private func handleCancel() {
@@ -136,5 +135,28 @@ class AddPackageModalViewController: UIViewController {
         dismiss(animated: false) {
             self.delegate?.didAddPackage(name: nameText, trackingNumber: trackingNumberText)
         }
+    }
+    
+    private func setupCarrierPicker() {
+        carrierTextField.inputView = carrierPickerView
+        carrierTextField.inputAccessoryView = carrierPickerView.toolbar
+        
+        carrierPickerView.dataSource = self
+        carrierPickerView.delegate = self
+        carrierPickerView.carrierPickerViewDelegate = self
+    }
+}
+
+extension AddPackageModalViewController: CarrierPickerViewDelegate {
+    func didTapDone() {
+        let row = carrierPickerView.selectedRow(inComponent: 0)
+        carrierTextField.text = carriers[row].rawValue
+        carrierPickerView.selectRow(0, inComponent: 0, animated: false) // reset back to first option for when picker is re-openned
+        carrierTextField.resignFirstResponder()
+    }
+    
+    func didTapCancel() {
+        carrierPickerView.selectRow(0, inComponent: 0, animated: false) // reset back to first option for when picker is re-openned
+        carrierTextField.resignFirstResponder()
     }
 }

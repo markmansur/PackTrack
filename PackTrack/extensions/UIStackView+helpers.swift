@@ -11,10 +11,9 @@ import UIKit
 extension UIStackView {
     // must be used after axis is set on UIStackView
     func addSeparators(color: UIColor) {
-        let separatorView = createSeparatorView(color: color)
-        
         var i = arrangedSubviews.count - 1
         while i > 0 {
+            let separatorView = createSeparatorView(color: color)
             self.insertArrangedSubview(separatorView, at: i)
             i = i - 1
         }
