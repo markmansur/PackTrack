@@ -15,7 +15,7 @@ extension AddPackageModalViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 5
+        return carriers.count
     }
     
     

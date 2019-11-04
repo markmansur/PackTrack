@@ -11,7 +11,6 @@ import Foundation
 enum Carrier: String, CaseIterable {
     case ups = "UPS"
     case usps = "United States Postal Service"
-    case canadaPost = "Canada Post"
     case fedex = "FedEx"
     case dhl = "DHL"
 }

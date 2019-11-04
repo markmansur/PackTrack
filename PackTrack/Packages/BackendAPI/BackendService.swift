@@ -12,8 +12,23 @@ struct BackendService {
     static let shared = BackendService()
     
     // TODO: pass in and use carrier here
-    func getTrackingInfo(for trackingNumber: String, completion: @escaping (trackingResponse?, Error?) -> Void) {
-        let urlString = "http://localhost:5000/\("ups")/\(trackingNumber)"
+    func getTrackingInfo(for trackingNumber: String, carrier: String, completion: @escaping (trackingResponse?, Error?) -> Void) {
+        var carrierCode: String?
+        
+        switch carrier {
+        case Carrier.ups.rawValue:
+            carrierCode = "ups"
+        case Carrier.usps.rawValue:
+            carrierCode = "usps"
+        case Carrier.fedex.rawValue:
+            carrierCode = "fedex"
+        case Carrier.dhl.rawValue:
+            carrierCode = "dhl"
+        default:
+            carrierCode = ""
+        }
+        
+        let urlString = "http://localhost:5000/\(carrierCode ?? "")/\(trackingNumber)"
         guard let url = URL(string: urlString) else { return }
         let request = URLRequest(url: url)
         
