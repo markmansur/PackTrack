@@ -86,8 +86,8 @@ class PackagesViewModel {
         }
     }
     
-    func addPackage(name: String, trackingNumber: String) {
-        let package = CoreDataManager.shared.addPackage(name: name, trackingNumber: trackingNumber)
+    func addPackage(name: String, trackingNumber: String, carrier: String) {
+        let package = CoreDataManager.shared.addPackage(name: name, trackingNumber: trackingNumber, carrier: carrier)
         packages.append(package)
         updatePackage(package: package)
     }

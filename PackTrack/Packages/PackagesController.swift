@@ -145,8 +145,8 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
         addPackageButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -12).isActive = true
     }
     
-    func didAddPackage(name: String, trackingNumber: String) {
-        viewModel?.addPackage(name: name, trackingNumber: trackingNumber)
+    func didAddPackage(name: String, trackingNumber: String, carrier: String) {
+        viewModel?.addPackage(name: name, trackingNumber: trackingNumber, carrier: carrier)
         collectionView.reloadData()
     }
     

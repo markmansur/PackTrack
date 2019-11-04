@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddPackageModalDelegate {
-    func didAddPackage(name: String, trackingNumber: String)
+    func didAddPackage(name: String, trackingNumber: String, carrier: String)
 }
 
 class AddPackageModalViewController: UIViewController {
@@ -131,9 +131,10 @@ class AddPackageModalViewController: UIViewController {
     @objc private func handleAdd() {
         let nameText = nameTextField.text ?? ""
         let trackingNumberText = trackingNumberTextField.text ?? ""
+        let carrierText = carrierTextField.text ?? ""
         
         dismiss(animated: false) {
-            self.delegate?.didAddPackage(name: nameText, trackingNumber: trackingNumberText)
+            self.delegate?.didAddPackage(name: nameText, trackingNumber: trackingNumberText, carrier: carrierText)
         }
     }
     
