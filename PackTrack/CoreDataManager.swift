@@ -49,12 +49,13 @@ struct CoreDataManager {
         
     }
     
-    func addPackage(name: String, trackingNumber: String, trackingJson: trackingResponse? = nil) -> Package {
+    func addPackage(name: String, trackingNumber: String, carrier: String, trackingJson: trackingResponse? = nil) -> Package {
         let context = persistentContainer.viewContext
         
         let package = Package(context: context)
         package.name = name
         package.trackingNumber = trackingNumber
+        package.carrier = carrier
         package.status = trackingJson?.checkpoints?[0].tag
         
         trackingJson?.checkpoints?.forEach({ (checkpoint) in

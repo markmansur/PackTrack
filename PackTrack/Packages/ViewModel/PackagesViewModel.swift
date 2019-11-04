@@ -20,7 +20,7 @@ class PackagesViewModel {
     let deliveredParcels = 0
     
     init() {
-//        CoreDataManager.shared.deleteAllPackages()
+        CoreDataManager.shared.deleteAllPackages()
         getCoreDataPackages()
     }
     
@@ -36,8 +36,9 @@ class PackagesViewModel {
         packages.forEach { (package) in
             dispatchGroup.enter()
             guard let trackingNumber = package.trackingNumber else { return }
+            guard let carrier = package.carrier else { return }
             
-            BackendService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
+            BackendService.shared.getTrackingInfo(for: trackingNumber, carrier: carrier) { (trackingResponseJSON, error) in
                 if let error = error {
                     fatalError("error updating package \(error)")
                 }
@@ -71,7 +72,9 @@ class PackagesViewModel {
     
     private func updatePackage(package: Package) {
         guard let trackingNumber = package.trackingNumber else { return }
-        BackendService.shared.getTrackingInfo(for: trackingNumber) { (trackingResponseJSON, error) in
+        guard let carrier = package.carrier else { return }
+        
+        BackendService.shared.getTrackingInfo(for: trackingNumber, carrier: carrier) { (trackingResponseJSON, error) in
             if let error = error {
                 fatalError("error updating package \(error)")
             }
@@ -86,8 +89,8 @@ class PackagesViewModel {
         }
     }
     
-    func addPackage(name: String, trackingNumber: String) {
-        let package = CoreDataManager.shared.addPackage(name: name, trackingNumber: trackingNumber)
+    func addPackage(name: String, trackingNumber: String, carrier: String) {
+        let package = CoreDataManager.shared.addPackage(name: name, trackingNumber: trackingNumber, carrier: carrier)
         packages.append(package)
         updatePackage(package: package)
     }
