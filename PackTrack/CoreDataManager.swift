@@ -49,17 +49,70 @@ struct CoreDataManager {
         
     }
     
-    func addPackage(name: String, trackingNumber: String) -> Package {
+    func addPackage(name: String, trackingNumber: String, carrier: String, trackingJson: trackingResponse? = nil) -> Package {
         let context = persistentContainer.viewContext
-        let package = NSEntityDescription.insertNewObject(forEntityName: "Package", into: context) as! Package
-        package.setValuesForKeys(["name": name, "trackingNumber": trackingNumber])
+        
+        let package = Package(context: context)
+        package.name = name
+        package.trackingNumber = trackingNumber
+        package.carrier = carrier
+        package.status = trackingJson?.checkpoints?[0].tag
+        
+        trackingJson?.checkpoints?.forEach({ (checkpoint) in
+            let context = persistentContainer.viewContext
+            
+            let trackingStatus = TrackingStatus(context: context)
+            trackingStatus.status = checkpoint.tag
+            trackingStatus.statusDetails = checkpoint.message
+            if let dateString = checkpoint.time {
+                trackingStatus.statusDate = getDate(date: dateString)
+            }
+            let trackingStatusLocation = TrackingStatusLocation(context: context)
+            trackingStatusLocation.city = checkpoint.city
+            trackingStatusLocation.state = checkpoint.state
+            trackingStatusLocation.country = checkpoint.country
+            
+            trackingStatus.location = trackingStatusLocation
+            package.addToTrackingHistory(trackingStatus)
+        })
+        saveContext()
         
         saveContext()
         return package
     }
     
-    func updatePackage(package: Package, withJSON trackingJson: trackingResponseJSON) {
-        package.status = trackingJson.trackingStatus?.status
+    func updatePackage(package: Package, trackingJson: trackingResponse) {
+        package.status = trackingJson.checkpoints?[0].tag
+        package.trackingHistory = nil // remove any current tracking history.
+        
+        trackingJson.checkpoints?.forEach({ (checkpoint) in
+            let context = persistentContainer.viewContext
+            
+            let trackingStatus = TrackingStatus(context: context)
+            trackingStatus.status = checkpoint.tag
+            trackingStatus.statusDetails = checkpoint.message
+            if let dateString = checkpoint.time {
+                trackingStatus.statusDate = getDate(date: dateString)
+            }
+            let trackingStatusLocation = TrackingStatusLocation(context: context)
+            trackingStatusLocation.city = checkpoint.city
+            trackingStatusLocation.state = checkpoint.state
+            trackingStatusLocation.country = checkpoint.country
+            
+            trackingStatus.location = trackingStatusLocation
+            package.addToTrackingHistory(trackingStatus)
+        })
+        saveContext()
+    }
+    
+    func updateGeolocation(for trackingStatus: TrackingStatus, latitude: Double, longitude: Double) {
+        let geoLocation = Geolocation(context: persistentContainer.viewContext)
+        geoLocation.latitude = latitude
+        geoLocation.longitude = longitude
+        
+        let location = trackingStatus.location
+        location?.geolocation = geoLocation
+        
         saveContext()
     }
     
@@ -70,5 +123,14 @@ struct CoreDataManager {
         } catch let saveErr {
             fatalError("Failed to save package: \(saveErr)")
         }
+    }
+    
+    private func getDate(date: String) -> Date? {
+        // remove the milliseconds portion from the string, otherwise formatter fails...
+        var newDateString = date.components(separatedBy: ".")[0]
+        newDateString.append("Z")
+        
+        let dateFormatter = ISO8601DateFormatter()
+        return dateFormatter.date(from: newDateString)
     }
 }
