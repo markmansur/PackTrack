@@ -56,7 +56,7 @@ struct CoreDataManager {
         package.name = name
         package.trackingNumber = trackingNumber
         package.carrier = carrier
-        package.status = trackingJson?.checkpoints?[0].tag
+        package.status = trackingJson?.checkpoints?.last?.tag
         
         trackingJson?.checkpoints?.forEach({ (checkpoint) in
             let context = persistentContainer.viewContext
@@ -82,7 +82,7 @@ struct CoreDataManager {
     }
     
     func updatePackage(package: Package, trackingJson: trackingResponse) {
-        package.status = trackingJson.checkpoints?[0].tag
+        package.status = trackingJson.checkpoints?.last?.tag
         package.trackingHistory = nil // remove any current tracking history.
         
         trackingJson.checkpoints?.forEach({ (checkpoint) in

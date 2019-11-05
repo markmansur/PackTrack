@@ -21,16 +21,16 @@ class PackageController: UIViewController {
             daysLeftView.daysLeft = 4
             
             switch package?.status {
-            case "PRE_TRANSIT":
-                packageStatusLabel.text = "Pre transit"
-            case "TRANSIT":
+            case "InfoReceived":
+                packageStatusLabel.text = "Info received"
+            case "InTransit":
                 packageStatusLabel.text = "In transit"
-            case "DELIVERED":
+            case "Delivered":
                 packageStatusLabel.text = "Delivered"
-            case "RETURNED":
-                packageStatusLabel.text = "Returned"
-            case "FAILURE":
-                packageStatusLabel.text = "Failure"
+            case "OutForDelivery":
+                packageStatusLabel.text = "Out for delivery"
+            case "Exception":
+                packageStatusLabel.text = "Exception"
             default:
                 packageStatusLabel.text = "Unknown"
             }
