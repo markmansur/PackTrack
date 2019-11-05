@@ -76,7 +76,7 @@ class GMapsController: UIViewController {
                 let markerLatitude = position.latitude
                 let markerLongitude = position.longitude
                 
-                if markerLatitude == latitude && markerLongitude == longitude {
+                if markerLatitude == latitude && markerLongitude == longitude && geolocation.isEqual(geolocations?.last) == false{
                     alreadyExists = true
                 }
             }
@@ -97,12 +97,30 @@ class GMapsController: UIViewController {
                 path.add(markerLocation)
                 
                 marker.position = markerLocation
-                marker.map = view as? GMSMapView
+//                marker.map = view as? GMSMapView
                 bounds = bounds.includingCoordinate(marker.position)
                 
                 markers.append(marker)
             }
         })
+        
+        var i = markers.count - 2
+        let lastLat = markers.last?.position.latitude
+        let lastLong = markers.last?.position.longitude
+        
+        while i > 0 {
+            let lat = markers[i].position.latitude
+            let long = markers[i].position.longitude
+            
+            if lastLat == lat && lastLong == long {
+                markers.remove(at: i)
+            }
+            i = i - 1
+        }
+        
+        markers.forEach { (marker) in
+            marker.map = view as? GMSMapView
+        }
         
         let polyline = GMSPolyline(path: path)
         polyline.strokeColor = .customGreen
