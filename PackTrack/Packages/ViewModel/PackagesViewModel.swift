@@ -20,7 +20,7 @@ class PackagesViewModel {
     let deliveredParcels = 0
     
     init() {
-        CoreDataManager.shared.deleteAllPackages()
+//        CoreDataManager.shared.deleteAllPackages()
         getCoreDataPackages()
     }
     

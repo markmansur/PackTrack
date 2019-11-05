@@ -14,6 +14,7 @@ class PackageCell: UICollectionViewCell {
         didSet {
             nameLabel.text = package?.name
             trackingLabel.text = package?.trackingNumber
+            setupCarrierImage()
             
             switch package?.status {
             case "PRE_TRANSIT":
@@ -31,6 +32,27 @@ class PackageCell: UICollectionViewCell {
             }
             setupMapView()
             
+        }
+    }
+    
+    private func setupCarrierImage() {
+        var imageName: String?
+        
+        switch package?.carrier {
+        case Carrier.ups.rawValue:
+            imageName = "ups-logo"
+        case Carrier.dhl.rawValue:
+            imageName = "dhl-logo"
+        case Carrier.fedex.rawValue:
+            imageName = "fedex-logo"
+        case Carrier.usps.rawValue:
+            imageName = "usps-logo"
+        default:
+            imageName = nil
+        }
+        
+        if let imageName = imageName {
+            carrierImageView.image = UIImage(named: imageName)
         }
     }
     
@@ -76,9 +98,23 @@ class PackageCell: UICollectionViewCell {
         return label
     }()
     
+    private let carrierBackgroundView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 4
+        view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.darkBlue.withAlphaComponent(0.95).cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = 30
+        view.layer.shadowOpacity = 0.17
+        view.layer.masksToBounds = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let carrierImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .yellow
+        imageView.contentMode = .scaleAspectFill
+        imageView.alpha = 0.75
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -109,11 +145,17 @@ class PackageCell: UICollectionViewCell {
         labelsStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
         labelsStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
         
-        addSubview(carrierImageView)
-        carrierImageView.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
-        carrierImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
-        carrierImageView.heightAnchor.constraint(equalToConstant: 90).isActive = true
-        carrierImageView.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        addSubview(carrierBackgroundView)
+        carrierBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
+        carrierBackgroundView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+        carrierBackgroundView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        carrierBackgroundView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        carrierBackgroundView.addSubview(carrierImageView)
+        carrierImageView.centerXAnchor.constraint(equalTo: carrierBackgroundView.centerXAnchor).isActive = true
+        carrierImageView.centerYAnchor.constraint(equalTo: carrierBackgroundView.centerYAnchor).isActive = true
+        carrierImageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        carrierImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     required init?(coder: NSCoder) {
