@@ -128,6 +128,12 @@ class PackageCell: UICollectionViewCell {
     private func setupView() {
         backgroundColor = .white
         layer.cornerRadius = 5
+        
+        layer.shadowColor = UIColor.darkBlue.withAlphaComponent(0.95).cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 10
+        layer.shadowOpacity = 0.09
+        layer.masksToBounds = false
     }
     
     private func setupSubviews() {

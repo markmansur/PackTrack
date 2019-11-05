@@ -122,7 +122,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
         collectionView.register(PackageCell.self, forCellWithReuseIdentifier: "cellId")
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.94).isActive = true
+        collectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
         collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
