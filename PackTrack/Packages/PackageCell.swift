@@ -17,16 +17,16 @@ class PackageCell: UICollectionViewCell {
             setupCarrierImage()
             
             switch package?.status {
-            case "PRE_TRANSIT":
-                statusLabel.text = "Pre transit"
-            case "TRANSIT":
+            case "InfoReceived":
+                statusLabel.text = "Info received"
+            case "InTransit":
                 statusLabel.text = "In transit"
-            case "DELIVERED":
+            case "Delivered":
                 statusLabel.text = "Delivered"
-            case "RETURNED":
-                statusLabel.text = "Returned"
-            case "FAILURE":
-                statusLabel.text = "Failure"
+            case "OutForDelivery":
+                statusLabel.text = "Out for delivery"
+            case "Exception":
+                statusLabel.text = "Exception"
             default:
                 statusLabel.text = "Unknown"
             }
