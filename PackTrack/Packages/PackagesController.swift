@@ -15,13 +15,6 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
         .lightContent
     }
     
-    let blueBackgroundView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .darkBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     let activePackagesNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "3"
@@ -83,11 +76,8 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
     }
     
     private func setupBlueBackgroundView() {
+        let blueBackgroundView = BlueBackgroundView(frame: view.frame)
         view.addSubview(blueBackgroundView)
-        blueBackgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        blueBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        blueBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        blueBackgroundView.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: 100).isActive = true
     }
     
     private func setupCountLabels() {
@@ -123,7 +113,7 @@ class PackagesController: UICollectionViewController, PackagesViewModelDelegate,
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1).isActive = true
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 180).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 170).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
