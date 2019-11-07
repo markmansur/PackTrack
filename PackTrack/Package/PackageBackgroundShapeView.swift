@@ -27,9 +27,9 @@ class PackageBackgroundShapeView: UIView {
         path?.fill()
         
         UIColor.customWhite.withAlphaComponent(0.15).setFill()
-        setupLargeOutterTriangle()
+        setupLargeOuterTriangle()
         path?.fill()
-        setupSmallOutterTriangle()
+        setupSmallOuterTriangle()
         path?.fill()
     }
     
@@ -44,7 +44,7 @@ class PackageBackgroundShapeView: UIView {
         path?.close()
     }
     
-    private func setupLargeOutterTriangle() {
+    private func setupLargeOuterTriangle() {
         path = UIBezierPath()
         
         path?.move(to: CGPoint(x: 0.0, y: frame.height / 2 - 30))
@@ -65,7 +65,7 @@ class PackageBackgroundShapeView: UIView {
         path?.close()
     }
     
-    private func setupSmallOutterTriangle() {
+    private func setupSmallOuterTriangle() {
         path = UIBezierPath()
         
         path?.move(to: CGPoint(x: frame.width - 20 - 25, y: 100))
