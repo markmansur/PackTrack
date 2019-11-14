@@ -2,4 +2,4 @@
 
 Design below, simulator screenshots coming...
 
-![design](images/design)
+![design](images/design.jpg)
