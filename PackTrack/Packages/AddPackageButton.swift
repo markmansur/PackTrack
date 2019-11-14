@@ -29,6 +29,7 @@ class AddPackageButton: UIButton {
 
         
         setupView()
+        setupBorder()
         setupShadow()
     }
     
@@ -52,10 +53,15 @@ class AddPackageButton: UIButton {
         plusImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
+    private func setupBorder() {
+        layer.borderColor = UIColor.transparentBorder.withAlphaComponent(0.4).cgColor
+        layer.borderWidth = 3
+    }
+    
     private func setupShadow() {
-        layer.shadowOffset = .zero
-        layer.shadowOpacity = 1
-        layer.shadowRadius = 2
-        layer.shadowColor = UIColor.transparentBorder.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 15)
+        layer.shadowOpacity = 0.55
+        layer.shadowRadius = 15
+        layer.shadowColor = UIColor.darkBlue.withAlphaComponent(0.5).cgColor
     }
 }

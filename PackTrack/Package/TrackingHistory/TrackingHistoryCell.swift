@@ -11,7 +11,16 @@ import UIKit
 class TrackingHistoryCell: UITableViewCell {
     var trackingStatus: TrackingStatus? {
         didSet {
-            statusLabel.text = trackingStatus?.statusDetails
+            let status = trackingStatus?.statusDetails
+            switch status {
+            case "Departure Scan":
+                statusLabel.text = "Departed from distribution centre"
+            case "Arrival scan":
+                statusLabel.text = "Arrived at distribution centre"
+            default:
+                statusLabel.text = status
+            }
+            
             if let date = trackingStatus?.statusDate {
                 print(date)
                 dateLabel.text = formatDate(date, withFormatter: "dd MMM yyyy")
