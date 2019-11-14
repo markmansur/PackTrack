@@ -21,16 +21,16 @@ class PackageController: UIViewController {
             daysLeftView.daysLeft = 4
             
             switch package?.status {
-            case "PRE_TRANSIT":
-                packageStatusLabel.text = "Pre transit"
-            case "TRANSIT":
+            case "InfoReceived":
+                packageStatusLabel.text = "Info received"
+            case "InTransit":
                 packageStatusLabel.text = "In transit"
-            case "DELIVERED":
+            case "Delivered":
                 packageStatusLabel.text = "Delivered"
-            case "RETURNED":
-                packageStatusLabel.text = "Returned"
-            case "FAILURE":
-                packageStatusLabel.text = "Failure"
+            case "OutForDelivery":
+                packageStatusLabel.text = "Out for delivery"
+            case "Exception":
+                packageStatusLabel.text = "Exception"
             default:
                 packageStatusLabel.text = "Unknown"
             }
@@ -56,7 +56,7 @@ class PackageController: UIViewController {
     let trackingNumLabel: UILabel = {
         let label = UILabel()
         label.textColor = .customWhite
-        label.font = UIFont.boldSystemFont(ofSize: 40)
+        label.font = UIFont.boldSystemFont(ofSize: 36)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -107,6 +107,7 @@ class PackageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = true
+        setupShapesBackgroundView()
         setupBackImageView()
         setupPackageNameLabel()
         setupTrackingNumberLabel()
@@ -115,6 +116,11 @@ class PackageController: UIViewController {
         setupTrackingHistoryController()
         setupStatusViews()
         view.backgroundColor = .darkBlue
+    }
+    
+    private func setupShapesBackgroundView() {
+        let shapesView = PackageBackgroundShapeView(frame: view.frame)
+        view.addSubview(shapesView)
     }
     
     private func setupMapVC() {
@@ -142,7 +148,7 @@ class PackageController: UIViewController {
     private func setupBackImageView() {
         view.addSubview(leftArrowImageView)
         leftArrowImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
-        leftArrowImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30).isActive = true
+        leftArrowImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 15).isActive = true
     }
     
     private func setupPackageNameLabel() {
@@ -156,19 +162,19 @@ class PackageController: UIViewController {
             trackingNumberLabel,
             trackingNumLabel
         ])
-        stackView.spacing = 10
+        stackView.spacing = 15
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(stackView)
-        stackView.topAnchor.constraint(equalTo: leftArrowImageView.bottomAnchor, constant: 20).isActive = true
+        stackView.topAnchor.constraint(equalTo: leftArrowImageView.bottomAnchor, constant: 35).isActive = true
         stackView.leftAnchor.constraint(equalTo: leftArrowImageView.leftAnchor).isActive = true
     }
     
     private func setupWhiteCard() {
         view.addSubview(whiteCard)
         whiteCard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        whiteCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.93).isActive = true
+        whiteCard.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.92).isActive = true
         whiteCard.heightAnchor.constraint(equalToConstant: 540).isActive = true
         whiteCard.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
     }
@@ -188,7 +194,7 @@ class PackageController: UIViewController {
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(horizontalStackView)
-        horizontalStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -75).isActive = true
+        horizontalStackView.centerYAnchor.constraint(equalTo: whiteCard.centerYAnchor, constant: -85).isActive = true
         horizontalStackView.leftAnchor.constraint(equalTo: whiteCard.leftAnchor, constant: 14).isActive = true
         horizontalStackView.rightAnchor.constraint(equalTo: whiteCard.rightAnchor, constant: -14).isActive = true
     }
