@@ -104,9 +104,9 @@ class TrackingHistoryCell: UITableViewCell {
             dateTimeStackView.addArrangedSubview(lineSeparatorView)
         }
         
-        dateTimeStackView.axis = .vertical
+        dateTimeStackView.axis         = .vertical
         dateTimeStackView.distribution = .fillEqually
-        dateTimeStackView.spacing = 8
+        dateTimeStackView.spacing      = 8
         dateTimeStackView.setCustomSpacing(4, after: timeLabel)
         dateTimeStackView.translatesAutoresizingMaskIntoConstraints = false
         

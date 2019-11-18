@@ -200,15 +200,13 @@
 		686C867523024A9200B23059 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				6873585923831255005A57B9 /* View */,
 				680A1F6E23312C7000A66340 /* AddPackageModal */,
 				6811682B2308D1310061377A /* BackendAPI */,
 				6811682A2308CEC80061377A /* ViewModel */,
 				686C866322FFC7C200B23059 /* PackagesController.swift */,
-				686C86762302598300B23059 /* PackageCell.swift */,
 				686C867823025AD000B23059 /* Package.swift */,
 				686C867A2304EF8E00B23059 /* PackagesController+CollectionView.swift */,
-				680A1F65232182F200A66340 /* AddPackageButton.swift */,
-				68759AB62373B217002E493C /* BlueBackgroundView.swift */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -235,6 +233,16 @@
 				68650A76236F3CFB002801D2 /* UITextField+helpers.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		6873585923831255005A57B9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				686C86762302598300B23059 /* PackageCell.swift */,
+				680A1F65232182F200A66340 /* AddPackageButton.swift */,
+				68759AB62373B217002E493C /* BlueBackgroundView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		68B91DF1236F3A600058F49F /* Carrier */ = {
