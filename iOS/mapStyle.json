@@ -37,6 +37,9 @@
     "stylers": [
       {
         "color": "#4b6878"
+      },
+      {
+        "weight": 1.5
       }
     ]
   },
@@ -79,8 +82,7 @@
     ]
   },
   {
-    "featureType": "landscape.natural",
-    "elementType": "geometry.fill",
+    "featureType": "landscape.natural.landcover",
     "stylers": [
       {
         "color": "#204083"
@@ -92,7 +94,16 @@
     "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#2d5285"
+        "color": "#2f4b91"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural.landcover",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "color": "#668345"
       }
     ]
   },
