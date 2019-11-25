@@ -25,6 +25,8 @@ Next you'll need to sign up for an Google Maps Api key. Once you have your key, 
 
 You're ready to build and run the app.
 
-## License
+## Author
+This work is authored by Mark Mansur
 
+## License
 PackTrack is open-sourced under [MIT-License](https://opensource.org/licenses/MIT).
