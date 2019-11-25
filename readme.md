@@ -1,5 +1,2 @@
 # PackTrack
-
-Design below, simulator screenshots coming...
-
-![design](images/design.jpg)
+![Screen-1](images/screenshots.png)
