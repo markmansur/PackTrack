@@ -36,7 +36,7 @@ class PackagesViewModel {
         packages.forEach { (package) in
             dispatchGroup.enter()
             guard let trackingNumber = package.trackingNumber else { return }
-            guard let carrier = package.carrier else { return }
+            guard let carrier        = package.carrier else { return }
             
             BackendService.shared.getTrackingInfo(for: trackingNumber, carrier: carrier) { (trackingResponseJSON, error) in
                 if let error = error {
@@ -46,9 +46,9 @@ class PackagesViewModel {
                 CoreDataManager.shared.updatePackage(package: package, trackingJson: trackingResponseJSON)
                 
                 (package.trackingHistory?.array as! [TrackingStatus]).forEach { (trackingStatus) in
-                    let location = trackingStatus.location
-                    guard let city = location?.city else { return }
-                    guard let state = location?.state else { return }
+                    let location      = trackingStatus.location
+                    guard let city    = location?.city else { return }
+                    guard let state   = location?.state else { return }
                     guard let country = location?.country else { return }
                     
                     GeocodingService.shared.getGeocode(city: city, state: state, country: country) { (coordinate, error) in
@@ -72,7 +72,7 @@ class PackagesViewModel {
     
     private func updatePackage(package: Package) {
         guard let trackingNumber = package.trackingNumber else { return }
-        guard let carrier = package.carrier else { return }
+        guard let carrier        = package.carrier else { return }
         
         BackendService.shared.getTrackingInfo(for: trackingNumber, carrier: carrier) { (trackingResponseJSON, error) in
             if let error = error {
